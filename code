@@ -23,7 +23,7 @@ components.html(
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h2 class="display-4">Question Answering System</h2>
-            <h4>Research Practice by Keshav Sonu under guidance of Prof. Mukesh Kumar Rohil</h4>
+            <h4>Ask questions based on the given article</h4>
         </div>
     </div>
 
