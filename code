@@ -1,0 +1,52 @@
+import streamlit as st
+import streamlit.components.v1 as components
+from transformers import pipeline
+
+components.html(
+    """
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .jumbotron{
+            background: lightblue;
+        }
+
+        .display-4{
+            display: flex;
+            justify-content: center;
+            color: orangered;
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h2 class="display-4">Question Answering System</h2>
+            <h4>Research Practice by Keshav Sonu under guidance of Prof. Mukesh Kumar Rohil</h4>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    """,
+    height=300,
+)
+
+
+@st.cache_resource
+
+def load_model():
+    model = pipeline("question-answering")
+    return model
+
+qa = load_model()
+st.title("Ask questions based on your article")
+articles = st.text_area("Please enter your article")
+quest = st.text_input("Ask your question based on article") 
+button = st.button("Answer")
+with st.spinner("Finding Answer..."):
+    if button and articles:
+        answers = qa(question=quest, context=articles)
+        st.success(answers['answer'])
